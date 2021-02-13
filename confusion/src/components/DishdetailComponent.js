@@ -6,21 +6,19 @@ class DishDetail extends Component {
     renderComments(comments) {
         if (comments != null) {
             const commentsList = comments.map((comment) => {
-                const fecha = new Date(comment.date);
                 return (
                   <div key={comment.id}>
                     <ul className="list-unstyled">
-                        <li>
+                        <p>
                             {comment.comment}
-                        </li>
-                        <li>
+                        </p>
+                        <p>
                             -- {comment.author}, {new Intl.DateTimeFormat("en-US", {
                                                     year: "numeric",
                                                     month: "short",
                                                     day: "2-digit",
-                                                    timeZone: 'GMT',
-                                                    }).format(fecha)}
-                        </li>
+                                                    }).format(new Date(Date.parse(comment.date)))}
+                        </p>
                     </ul>
                   </div>
                 );
@@ -39,26 +37,33 @@ class DishDetail extends Component {
     }
 
     render() {
-        return(
-            <div className="row">
-              <div  className="col-12 col-md-5 m-1">
-                <Card>
-                    <CardImg top width="100%" src={this.props.selectedDish.image} alt={this.props.selectedDish.name} />
-                    <CardBody>
-                        <CardTitle>
-                            {this.props.selectedDish.name}
-                        </CardTitle>
-                        <CardText>
-                            {this.props.selectedDish.description}
-                        </CardText>
-                    </CardBody>
-                </Card>
+        if(this.props.dish != null)
+            return (
+                <div className="container">
+                    <div className="row">
+                        <div  className="col-12 col-md-5 m-1">
+                            <Card>
+                                <CardImg top width="100%" src={this.props.dish.image} alt={this.props.dish.name} />
+                                <CardBody>
+                                    <CardTitle>
+                                        {this.props.dish.name}
+                                    </CardTitle>
+                                    <CardText>
+                                        {this.props.dish.description}
+                                    </CardText>
+                                </CardBody>
+                            </Card>
+                        </div>
+                        <div  className="col-12 col-md-5 m-1">
+                            {this.renderComments(this.props.dish.comments)}
+                        </div>
+                    </div>
                 </div>
-                <div  className="col-12 col-md-5 m-1">
-                    {this.renderComments(this.props.selectedDish.comments)}
-                </div>
-            </div>
         );
+        else
+            return (
+                <div></div>
+            );
     }
 
 }
