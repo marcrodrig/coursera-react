@@ -37,7 +37,7 @@ function RenderLeaders({leaders}) {
                         <Stagger in>
                             {leaders.leaders.map((leader) => {
                                 return (
-                                    <Fade in key={leader.id}>
+                                    <Fade in key={leader._id}>
                                         <RenderLeader leader={leader} />
                                     </Fade>
                                 );
@@ -51,7 +51,6 @@ function RenderLeaders({leaders}) {
 
 function RenderLeader({leader}) {
     return (
-        <div>
         <Media tag="li" className="mt-2">
             <Media left middle>
                 <Media object src={baseUrl + leader.image} alt={leader.name} />
@@ -62,7 +61,6 @@ function RenderLeader({leader}) {
                 <p>{leader.description}</p>
             </Media>
         </Media>
-        </div>
     );
 }
 
